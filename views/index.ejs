@@ -1,0 +1,36 @@
+<%- include('header'); -%>
+
+    
+        <form action="/add-client" method="POST">
+            <div class="justify-conent-center form-group">
+                <label for="name" class="col-4 float-left p-2 h5" >Company/Client Name</label>
+                <input class="form-control col-5 float-left" type="text" name="name" id="name" placeholder="Comany/Client Name">
+            </div>
+        
+            <button class="ml-3 btn btn-primary col-2 justify-content-center">Add Client</button>
+        </form>
+        <div class="mt-4">
+            <% if(show) {%>
+            <table class="table bg-dark text-white">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Sno.</th>
+                        <th scope="col">name</th>
+                        <th scope="col">Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(i=0;i<clients.length;i++){ %>
+                        <tr>
+                            <td class="text-center"><%= i+1 %></td>    
+                            <td><%= clients[i].name %></td>
+                            <td><a href="/ledger/<%= clients[i].id %>" class="text-white" >add/edit</a></td>
+                        </tr>
+                    <%}%>
+                </tbody>
+            </table>
+        <%}else{%>
+            <h1>No Data to show</h1>
+        <%}%>
+        </div>
+<%- include('footer'); -%>

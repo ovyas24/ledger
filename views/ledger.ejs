@@ -1,0 +1,72 @@
+<%- include('header'); -%>
+
+    <form action="/ledger/<%= id %>" class="contaienr-fluid" method="POST">
+        <div class="form-group col-12">
+            <label for="date" class=" col-3 float-left ml-2 mr-2 text-center p-2">Date</label>
+            <input type="date" class="form-control col-8 float-left ml-2 mr-2 " name="date" id="date">
+        </div>
+        <div class="form-group col-12">
+            <label class=" col-3 float-left ml-2 mr-2 text-center p-2" >Name</label>
+            <input class="form-control col-8 float-left ml-2 mr-2 " type="text" name="paticulars" placeholder="paticulars">
+        </div>
+        <div class="form-group col-12">
+            <label class=" col-3 float-left ml-2 mr-2 text-center p-2" >C.B Folio</label>
+            <input class="form-control col-8 float-left ml-2 mr-2 " type="text" name="cbfolio" id="" placeholder="C.B Folio" value="0" >
+        </div>
+        <div class="form-group col-12">
+            <label class=" col-3 float-left ml-2 mr-2 text-center p-2" >Debit</label>
+            <input class="form-control col-8 float-left ml-2 mr-2 " type="text" name="debit" id="" placeholder="Debit" value="0">
+        </div>
+        <div class="form-group col-12">
+            <label class=" col-3 float-left ml-2 mr-2 text-center p-2" >Credit</label>
+            <input class="form-control col-8 float-left ml-2 mr-2 " type="text" name="credit" id="" placeholder="Credit" value="0">
+        </div>
+        <div class="form-group col-12">
+            <label class=" col-3 float-left ml-2 mr-2 text-center p-2" >DR or CR</label>
+            <input class="form-control col-8 float-left ml-2 mr-2 " type="text" name="drcr" id="" placeholder="DR or CR" value="0">
+        </div>
+    </form>
+    <div class="container-fluid">
+        <% if(show) {%>
+            <h2>Balance : <%= data[data.length-1].balance %> </h2>
+            <form action="/newTerm/<%= id %>" method="POST">
+                <button class="btn btn-danger">
+                    NEW TERM
+                </button>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Particulars</th>
+                        <th scope="col">C.B Folio</th>
+                        <th scope="col">Debit</th>
+                        <th scope="col">Creadit</th>
+                        <th scope="col">DR or CR</th>
+                        <th scope="col">Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% var i =0 %>
+                    <% data.forEach((detail)=>{%>
+                        <tr>
+                            <td><%= i+1 %></td>
+                            <td><%= detail.date.getDate()%>-<%=detail.date.getMonth()+1%>-<%=detail.date.getFullYear()%></td>
+                            <td><%= detail.paticulars %></td>
+                            <td><%= detail.cbfolio %></td>
+                            <td><%= detail.debit %></td>
+                            <td><%= detail.credit %></td>
+                            <td><%= detail.drcr %></td>
+                            <td><%= detail.balance %></td>
+                        </tr>
+                    <% i+=1 %>
+                    <%}) %>
+                </tbody>
+            </table>
+        <%}else{%>
+            <h1>No Data to show</h1>
+        <%}%>
+    </div>
+    
+<%- include('footer'); -%>
