@@ -46,20 +46,22 @@
                         <th scope="col">Creadit</th>
                         <th scope="col">DR or CR</th>
                         <th scope="col">Balance</th>
+                        <th scope="col">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% var i =0 %>
                     <% data.forEach((detail)=>{%>
                         <tr>
-                            <td><%= i+1 %></td>
-                            <td><%= detail.date.getDate()%>-<%=detail.date.getMonth()+1%>-<%=detail.date.getFullYear()%></td>
-                            <td><%= detail.paticulars %></td>
-                            <td><%= detail.cbfolio %></td>
-                            <td><%= detail.debit %></td>
-                            <td><%= detail.credit %></td>
-                            <td><%= detail.drcr %></td>
-                            <td><%= detail.balance %></td>
+                            <td class="p-3"><%= i+1 %></td>
+                            <td class="p-3"><%= detail.date.getDate()%>-<%=detail.date.getMonth()+1%>-<%=detail.date.getFullYear()%></td>
+                            <td class="p-3"><%= detail.paticulars %></td>
+                            <td class="p-3"><%= detail.cbfolio %></td>
+                            <td class="p-3"><%= detail.debit %></td>
+                            <td class="p-3"><%= detail.credit %></td>
+                            <td class="p-3"><%= detail.drcr %></td>
+                            <td class="p-3"><%= detail.balance %></td>
+                            <td><form action="/delete/<%= id %>" method="POST"><button class="btn btn-danger " name="del"  value="<%= detail._id %>">Delete</button></form></td>
                         </tr>
                     <% i+=1 %>
                     <%}) %>

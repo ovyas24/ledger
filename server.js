@@ -121,6 +121,17 @@ app.post("/add-client",(req,res)=>{
     })
 })
 
+app.post("/delete/:id",(req,res)=>{
+    const id = req.params.id;
+    const del_id = req.body.del;
+    console.log(req.body);
+    Client.updateOne({_id:id},{$pull:{data:{_id:del_id}}},(err,result)=>{
+        if(err) res.send("404");
+        console.log("updating ",result);
+        res.redirect("/ledger/"+id);
+    })
+})
+
 app.listen(port,(req,res)=> {
     console.log(`App running at port ${port}`)
 })
