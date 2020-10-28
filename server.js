@@ -122,5 +122,5 @@ app.post("/add-client",(req,res)=>{
 })
 
 app.listen(port,(req,res)=> {
-    console.log(`App running at port port`)
+    console.log(`App running at port ${port}`)
 })
