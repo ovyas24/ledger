@@ -1,40 +1,80 @@
 <%- include('header'); -%>
-
-    <form action="/ledger/<%= id %>" class="contaienr-fluid" method="POST">
-        <div class="form-group col-12">
-            <label for="date" class=" col-3 float-left ml-2 mr-2 text-center p-2">Date</label>
-            <input type="date" class="form-control col-8 float-left ml-2 mr-2 " name="date" id="date">
+    <form action="/ledger/<%= id %>" method="POST">
+        <div class="form-row align-items-center">
+            <div class="col-6 my-1">
+                <lable class="sr-only">Date</lable>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Date</div>
+                    </div>
+                    <input type="date" class="form-control" name="date" id="date">
+                </div> 
+            </div>
+            <div class="col-6 my-1">
+                <label class="sr-only" for="">Particulars</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Particulars</div>
+                    </div>
+                    <input type="text" class="form-control" name="paticulars" placeholder="Particulars">
+                </div>
+            </div>
+            <div class="col-6 my-1">
+                <label class="sr-only" for="">C.B Folio</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">C.B Folio</div>
+                    </div>
+                    <input type="text" class="form-control" name="cbfolio" value="0" placeholder="C B Folio">
+                </div>
+            </div>
+            <div class="col-6 my-1">
+                <label class="sr-only" for="">Debit</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Debit</div>
+                    </div>
+                    <input type="text" class="form-control" name="debit" value="0" placeholder="Debit">
+                </div>
+            </div>
+            <div class="col-6 my-1">
+                <label class="sr-only" for="">Credit</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Credit</div>
+                    </div>
+                    <input type="text" class="form-control" name="credit" value="0" placeholder="Credit">
+                </div>
+            </div>
+            <div class="col-6 my-1">
+                <label class="sr-only" for="">DR or CR</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">DR or CR</div>
+                    </div>
+                    <input type="text" class="form-control" name="drcr" value="0" placeholder="DR or CR">
+                </div>
+            </div>
+            <div class="col-12 my-1 ">
+                <button class="btn btn-primary mb-2 float-right col-md-3">Add</button>
+            </div>
         </div>
-        <div class="form-group col-12">
-            <label class=" col-3 float-left ml-2 mr-2 text-center p-2" >Name</label>
-            <input class="form-control col-8 float-left ml-2 mr-2 " type="text" name="paticulars" placeholder="paticulars">
-        </div>
-        <div class="form-group col-12">
-            <label class=" col-3 float-left ml-2 mr-2 text-center p-2" >C.B Folio</label>
-            <input class="form-control col-8 float-left ml-2 mr-2 " type="text" name="cbfolio" id="" placeholder="C.B Folio" value="0" >
-        </div>
-        <div class="form-group col-12">
-            <label class=" col-3 float-left ml-2 mr-2 text-center p-2" >Debit</label>
-            <input class="form-control col-8 float-left ml-2 mr-2 " type="text" name="debit" id="" placeholder="Debit" value="0">
-        </div>
-        <div class="form-group col-12">
-            <label class=" col-3 float-left ml-2 mr-2 text-center p-2" >Credit</label>
-            <input class="form-control col-8 float-left ml-2 mr-2 " type="text" name="credit" id="" placeholder="Credit" value="0">
-        </div>
-        <div class="form-group col-12">
-            <label class=" col-3 float-left ml-2 mr-2 text-center p-2" >DR or CR</label>
-            <input class="form-control col-8 float-left ml-2 mr-2 " type="text" name="drcr" id="" placeholder="DR or CR" value="0">
-        </div>
-        <button class="btn btn-primary">Add</button>
     </form>
+
     <div class="container-fluid">
         <% if(show) {%>
-            <h2>Balance : <%= data[data.length-1].balance %> </h2>
-            <form action="/newTerm/<%= id %>" method="POST">
-                <button class="btn btn-danger">
-                    NEW TERM
-                </button>
-            </form>
+            <div class="col-12 ma-0 mt-4 p-0">
+                <div class="col-6 float-left">
+                    <h2>Balance : <%= data[data.length-1].balance %> </h2>
+                </div>
+                <div class="col-6 float-left">
+                    <form action="/newTerm/<%= id %>" class="float-right" method="POST">
+                        <button class="btn btn-danger">
+                            NEW TERM
+                        </button>
+                    </form>
+                </div>
+            </div>
             <table class="table bg-dark text-white mt-4">
                 <thead>
                     <tr>

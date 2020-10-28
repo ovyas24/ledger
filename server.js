@@ -16,12 +16,12 @@ const ClientSchema = new Schema({
 
 const LedgerData = new Schema({
     date:Date,
-    paticulars:String,
-    cbfolio:Number,
-    debit:Number,
-    credit:Number,
-    drcr:Number,
-    balance:Number,
+    paticulars:{type:String,default:"Not Set"},
+    cbfolio:{type:Number,default:0},
+    debit:{type:Number,default:0},
+    credit:{type:Number,default:0},
+    drcr:{type:Number,default:0},
+    balance:{type:Number,default:0},
 })
 
 const Client = new mongoose.model("Client",ClientSchema)
@@ -55,7 +55,7 @@ app.get("/ledger/:id",(req,res)=>{
 
 app.post("/ledger/:id",(req,res)=>{
     const id = req.params.id;
-    const {date,paticulars,cbfolio,debit,credit,drcr} = req.body;
+    var { date,paticulars,cbfolio,debit,credit,drcr } = req.body;
     var balance= 0;
     var details = new Ledger({
         date:date,
@@ -66,6 +66,21 @@ app.post("/ledger/:id",(req,res)=>{
         drcr,
         balance
     })
+    if(paticulars==undefined){
+        paticulars="Not Set"
+    } 
+    else if(cbfolio==undefined){
+        cbfolio=0
+    }
+    else if(debit==undefined){
+        debit=0
+    } 
+    else if(credit==undefined){
+        credit=0
+    }
+    else if(drcr==undefined){
+        drcr=0
+    }
     Client.findOne({_id:id},(err,result)=>{
         const data = result.data;
         if(!err) console.log(data,"found");
