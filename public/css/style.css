@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,900&display=swap");
 table tbody tr td a:hover {
   text-decoration: underline;
 }
@@ -26,6 +27,38 @@ table tbody tr td a:hover {
 
 .vertical-menu table {
   margin-top: -12px;
+}
+
+.err {
+  height: 100vh;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.err div {
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.err div h1 {
+  color: dodgerblue;
+  font-size: 200px;
+  font-family: 'Merriweather', serif;
+}
+
+.err div p {
+  font-size: 40px;
+  color: darkblue;
 }
 
 #ninja {

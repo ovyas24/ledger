@@ -43,10 +43,16 @@ app.get('/',(req,res)=>{
 app.get("/ledger/:id",(req,res)=>{
     const id = req.params.id;
     var show = false;
-    Ledger.find({userID:id},(err,details)=>{
-        const data = details
-        if(data.length>0) show = true
-        res.render("ledger" ,{show:show,data:data,id:id});
+    Client.find({_id:id},(er,re)=>{
+        if(er) console.log(er);
+        if(re.length < 1 ) res.redirect("/404")
+        else{
+            Ledger.find({userID:id},(err,details)=>{
+                const data = details
+                if(data.length>0) show = true
+                res.render("ledger" ,{show:show,data:data,id:id});
+            })
+        }
     })
 })
 
@@ -158,6 +164,11 @@ app.post("/delete/:id",(req,res)=>{
         res.redirect("/ledger/"+userID)
     })
 })
+
+app.get("*",(req,res)=>{
+    res.render("404")
+})
+
 
 app.listen(port,(req,res)=> {
     console.log(`App running at port ${port}`)
