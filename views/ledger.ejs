@@ -1,115 +1,131 @@
 <%- include('header'); -%>
-    <form action="/ledger/<%= id %>" method="POST">
-        <div class="form-row align-items-center">
-            <div class="col-6 my-1">
-                <lable class="sr-only">Date</lable>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Date</div>
+    <div class="col-12">
+        <div class="col-8 ledger-data shadow mt-4" style="float: left;">
+            <h2 class="h1 col-12 text-center bg-primary text-white rounded mt-2">Data</h2>
+            <% if(show) {%>
+                <div class="col-12 ma-0 mt-4 p-0">
+                    <div class="col-6 float-left">
+                        <h2>Balance : <%= data[data.length-1].balance %> </h2>
                     </div>
-                    <input type="date" class="form-control" name="date" id="date">
-                </div> 
-            </div>
-            <div class="col-6 my-1">
-                <label class="sr-only" for="">Particulars</label>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Particulars</div>
+                    <div class="col-6 float-left">
+                        <form action="/newTerm/<%= id %>" class="float-right" method="POST">
+                            <button class="btn btn-danger">
+                                NEW TERM
+                            </button>
+                        </form>
                     </div>
-                    <input type="text" class="form-control" name="paticulars" placeholder="Particulars">
                 </div>
-            </div>
-            <div class="col-6 my-1">
-                <label class="sr-only" for="">C.B Folio</label>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">C.B Folio</div>
-                    </div>
-                    <input type="text" class="form-control" name="cbfolio" value="0" placeholder="C B Folio">
-                </div>
-            </div>
-            <div class="col-6 my-1">
-                <label class="sr-only" for="">Debit</label>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Debit</div>
-                    </div>
-                    <input type="text" class="form-control" name="debit" value="0" placeholder="Debit">
-                </div>
-            </div>
-            <div class="col-6 my-1">
-                <label class="sr-only" for="">Credit</label>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Credit</div>
-                    </div>
-                    <input type="text" class="form-control" name="credit" value="0" placeholder="Credit">
-                </div>
-            </div>
-            <div class="col-6 my-1">
-                <label class="sr-only" for="">DR or CR</label>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">DR or CR</div>
-                    </div>
-                    <input type="text" class="form-control" name="drcr" value="0" placeholder="DR or CR">
-                </div>
-            </div>
-            <div class="col-12 my-1 ">
-                <button class="btn btn-primary mb-2 float-right col-md-3">Add</button>
-            </div>
-        </div>
-    </form>
-
-    <div class="container-fluid">
-        <% if(show) {%>
-            <div class="col-12 ma-0 mt-4 p-0">
-                <div class="col-6 float-left">
-                    <h2>Balance : <%= data[data.length-1].balance %> </h2>
-                </div>
-                <div class="col-6 float-left">
-                    <form action="/newTerm/<%= id %>" class="float-right" method="POST">
-                        <button class="btn btn-danger">
-                            NEW TERM
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <table class="table bg-dark text-white mt-4">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Particulars</th>
-                        <th scope="col">C.B Folio</th>
-                        <th scope="col">Debit</th>
-                        <th scope="col">Creadit</th>
-                        <th scope="col">DR or CR</th>
-                        <th scope="col">Balance</th>
-                        <th scope="col">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% var i =0 %>
-                    <% data.forEach((detail)=>{%>
+                <table class="table bg-dark text-white mt-4">
+                    <thead>
                         <tr>
-                            <td class="p-3"><%= i+1 %></td>
-                            <td class="p-3"><%= detail.date.getDate()%>-<%=detail.date.getMonth()+1%>-<%=detail.date.getFullYear()%></td>
-                            <td class="p-3"><%= detail.paticulars %></td>
-                            <td class="p-3"><%= detail.cbfolio %></td>
-                            <td class="p-3"><%= detail.debit %></td>
-                            <td class="p-3"><%= detail.credit %></td>
-                            <td class="p-3"><%= detail.drcr %></td>
-                            <td class="p-3"><%= detail.balance %></td>
-                            <td><form action="/delete/<%= id %>" method="POST"><button class="btn btn-danger " name="del"  value="<%= detail._id %>">Delete</button></form></td>
+                            <th scope="col">#</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Particulars</th>
+                            <th scope="col">C.B Folio</th>
+                            <th scope="col">Debit</th>
+                            <th scope="col">Creadit</th>
+                            <th scope="col">DR or CR</th>
+                            <th scope="col">Balance</th>
+                            <th scope="col">Delete</th>
                         </tr>
-                    <% i+=1 %>
-                    <%}) %>
-                </tbody>
-            </table>
-        <%}else{%>
-            <h1>No Data to show</h1>
-        <%}%>
+                    </thead>
+                </table>
+                <div class="vertical-menu">
+                    <table class="table bg-dark text-white mt-4">
+                        <thead>
+                        <tbody>
+                            <% var i =0 %>
+                            <% data.forEach((detail)=>{%>
+                                <tr>
+                                    <td class="p-3"><%= i+1 %></td>
+                                    <td class="p-3"><%= detail.date.getDate()%>-<%=detail.date.getMonth()+1%>-<%=detail.date.getFullYear()%></td>
+                                    <td class="p-3"><%= detail.paticulars %></td>
+                                    <td class="p-3"><%= detail.cbfolio %></td>
+                                    <td class="p-3"><%= detail.debit %></td>
+                                    <td class="p-3"><%= detail.credit %></td>
+                                    <td class="p-3"><%= detail.drcr %></td>
+                                    <td class="p-3"><%= detail.balance %></td>
+                                    <td>
+                                        <form action="/delete/<%= detail._id %>" method="POST">
+                                        <button class="btn btn-danger " name="del"  value="<%= id %>"><span aria-hidden="true">&times;</span></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% i+=1 %>
+                            <%}) %>
+                        </tbody>
+                    </table>
+                </div>
+            <%}else{%>
+                <div class="alert alert-info" role="alert">
+                    No Data To Show
+                </div>
+            <%}%>
+        </div>
+        <div class="col-3 ledger-form shadow mt-4 ml-4 ">
+            <h2 class="h2 col-12 text-center rounded bg-secondary text-white">Add To Ledger</h2>
+            <form action="/ledger/<%= id %>" method="POST">
+                <div class="form-row align-items-center">
+                    <div class="col-12 my-1">
+                        <lable class="sr-only">Date</lable>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Date</div>
+                            </div>
+                            <input type="date" class="form-control" name="date" id="date" required>
+                        </div> 
+                    </div>
+                    <div class="col-12 my-1">
+                        <label class="sr-only" for="">Particulars</label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Particulars</div>
+                            </div>
+                            <input type="text" class="form-control" name="paticulars" placeholder="Particulars">
+                        </div>
+                    </div>
+                    <div class="col-12 my-1">
+                        <label class="sr-only" for="">C.B Folio</label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">C.B Folio</div>
+                            </div>
+                            <input type="text" class="form-control" name="cbfolio" value="0" placeholder="C B Folio">
+                        </div>
+                    </div>
+                    <div class="col-12 my-1">
+                        <label class="sr-only" for="">Debit</label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Debit</div>
+                            </div>
+                            <input type="text" class="form-control" name="debit" value="0" placeholder="Debit">
+                        </div>
+                    </div>
+                    <div class="col-12 my-1">
+                        <label class="sr-only" for="">Credit</label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Credit</div>
+                            </div>
+                            <input type="text" class="form-control" name="credit" value="0" placeholder="Credit">
+                        </div>
+                    </div>
+                    <div class="col-12 my-1">
+                        <label class="sr-only" for="">DR or CR</label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">DR or CR</div>
+                            </div>
+                            <input type="text" class="form-control" name="drcr" value="0" placeholder="DR or CR">
+                        </div>
+                    </div>
+                    <div class="col-12 my-1 ">
+                        <button class="btn btn-info rounded mb-2 float-right col-md-3">Add</button>
+                    </div>
+                </div>
+            </form>   
+        </div> 
     </div>
     
 <%- include('footer'); -%>

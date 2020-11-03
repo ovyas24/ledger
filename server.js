@@ -15,6 +15,7 @@ const ClientSchema = new Schema({
 })
 
 const LedgerData = new Schema({
+    userID:String,
     date:Date,
     paticulars:{type:String,default:"Not Set"},
     cbfolio:{type:Number,default:0},
@@ -43,12 +44,10 @@ app.get('/',(req,res)=>{
 
 app.get("/ledger/:id",(req,res)=>{
     const id = req.params.id;
-    console.log(id);
     var show = false;
-    Client.findOne({_id:id},(err,details)=>{
-        const data = details.data
+    Ledger.find({userID:id},(err,details)=>{
+        const data = details
         if(data.length>0) show = true
-        console.log(data);
         res.render("ledger" ,{show:show,data:data,id:id});
     })
 })
@@ -58,6 +57,7 @@ app.post("/ledger/:id",(req,res)=>{
     var { date,paticulars,cbfolio,debit,credit,drcr } = req.body;
     var balance= 0;
     var details = new Ledger({
+        userID:id,
         date:date,
         paticulars,
         cbfolio,
@@ -81,6 +81,21 @@ app.post("/ledger/:id",(req,res)=>{
     else if(drcr==undefined){
         drcr=0
     }
+
+    Ledger.find({userID:id},(err,ledger)=>{
+        if(ledger.length>0){
+            details.balance = ledger[ledger.length-1].balance + (credit - debit);
+        }else{
+            details.balance = credit - debit;
+        }
+
+        details.save((err)=>{
+            if(err) return res.send(err)
+            console.log("Saving ldeger");
+            res.redirect("/ledger/"+id);
+        })
+    })
+    /*
     Client.findOne({_id:id},(err,result)=>{
         const data = result.data;
         if(!err) console.log(data,"found");
@@ -90,26 +105,27 @@ app.post("/ledger/:id",(req,res)=>{
             details.balance = credit - debit;
         }
         Client.updateOne({_id:id},{$push:{data:details}},(err,rest)=>{
-            if(err) console.log(err);;
-            console.log(rest);
+            if(err) console.log(err);
             res.redirect("/ledger/"+id);
         })
     })
+    */
 })
 
 app.post("/newTerm/:id",(req,res)=>{
     const paticulars = "1st April (Opening Balance)";
     var balance = 0;
     const id = req.params.id;
-    Client.findOne({_id:id},(err,result)=>{
-        balance = result.data[result.data.length-1].balance
-        const data=new Ledger({
+    Ledger.find({userID:id},(err,result)=>{
+        balance = result[result.length-1].balance
+        const data= new Ledger({
+            userID:id,
             date:Date.now(),
             paticulars,
             balance,
         })
-        Client.updateOne({_id:id},{$push:{data}},(err,result)=>{
-            console.log(result);
+        data.save((err)=>{
+            console.log(err);
             res.redirect("/ledger/"+id)
         })
     })
@@ -138,12 +154,10 @@ app.post("/add-client",(req,res)=>{
 
 app.post("/delete/:id",(req,res)=>{
     const id = req.params.id;
-    const del_id = req.body.del;
-    console.log(req.body);
-    Client.updateOne({_id:id},{$pull:{data:{_id:del_id}}},(err,result)=>{
-        if(err) res.send("404");
-        console.log("updating ",result);
-        res.redirect("/ledger/"+id);
+    const userID = req.body.del;
+    Ledger.deleteOne({_id:id},(err,result)=>{
+        console.log(result);
+        res.redirect("/ledger/"+userID)
     })
 })
 

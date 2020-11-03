@@ -1,14 +1,8 @@
 <%- include('header'); -%>
+<div class="col-12">
 
-    
-        <form action="/add-client" method="POST">
-            <div class="justify-conent-center form-group">
-                <label for="name" class="col-4 float-left p-2 h5" >Company/Client Name</label>
-                <input class="form-control col-5 float-left" type="text" name="name" id="name" placeholder="Comany/Client Name">
-            </div>
-        
-            <button class="ml-3 btn btn-primary col-2 justify-content-center">Add Client</button>
-        </form>
+    <div class="col-8 ledger-data shadow-lg bg-grey rounded mt-4" style="float: left;">
+        <h2 class="h1 col-12 text-center bg-primary text-white rounded mt-2">Data</h2>
         <div class="mt-4">
             <% if(show) {%>
             <table class="table bg-dark text-white">
@@ -30,7 +24,23 @@
                 </tbody>
             </table>
         <%}else{%>
-            <h1>No Data to show</h1>
+            <div class="alert alert-info" role="alert">
+                No Data To Show
+            </div>
         <%}%>
         </div>
+        </div>
+        <div class="col-3 ledger-form shadow-lg mt-4 ml-4 bg-warning rounded">
+            <h2 class="h2 col-12 text-center rounded bg-secondary text-white">Company/Client Name</h2>
+            <form action="/add-client" method="POST">
+                <div class="justify-conent-center form-group">
+                    <input class="form-control col-12 float-left" type="text" name="name" id="name" placeholder="Comany/Client Name" required>
+                </div>
+            
+                <div class="col-12 my-1 ">
+                    <button class="btn btn-info rounded mt-2 float-right col-4">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
 <%- include('footer'); -%>

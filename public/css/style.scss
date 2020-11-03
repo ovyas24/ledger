@@ -4,3 +4,28 @@ table tbody tr td a{
         text-decoration: underline;
     }
 }
+
+.bg-grey{
+    background-color: #d1d1d1;
+}
+
+
+.ledegr-data ,.ledger-form{
+    padding: 10px;
+    float: left;
+} 
+.ledger-form form{
+    padding: 10px;
+    font-weight: bold;
+}
+
+.vertical-menu {
+    margin-top: -10px;
+    width: 100%;
+    max-height: 70vh;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    table{
+        margin-top: -12px;
+    }
+  }
