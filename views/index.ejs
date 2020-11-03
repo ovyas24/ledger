@@ -9,8 +9,9 @@
                 <thead>
                     <tr>
                         <th scope="col" class="text-center">Sno.</th>
-                        <th scope="col">name</th>
+                        <th scope="col">Name</th>
                         <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,6 +20,10 @@
                             <td class="text-center"><%= i+1 %></td>    
                             <td><%= clients[i].name %></td>
                             <td><a href="/ledger/<%= clients[i].id %>" class="text-white" >add/edit</a></td>
+                            <td>
+                                <form id="ninja" action="http://example.com/" method="POST"></form>
+                                <button class="btn btn-danger " style="height: 30px;padding:0;padding-left: 15px;padding-right: 15px;" name="del" onclick="functionAlert('/rm-client/<%= clients[i].id %>','<%= clients[i].name %>');"><span aria-hidden="true">&times;</span></button>
+                            </td>
                         </tr>
                     <%}%>
                 </tbody>
@@ -43,4 +48,14 @@
             </form>
         </div>
     </div>
+
+    <script>
+        function functionAlert(a,name){
+            document.getElementById("ninja").action = a;
+            var per = confirm("Do you want to delete Client Data of : "+name+" ?");
+            if(per==true){
+                document.getElementById("ninja").submit();
+            }
+        }
+    </script>
 <%- include('footer'); -%>

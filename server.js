@@ -11,7 +11,6 @@ mongoose.connect("mongodb://localhost:27017/ledger",{ useNewUrlParser: true , us
 const Schema = mongoose.Schema;
 const ClientSchema = new Schema({
     name:String,
-    data:Array,
 })
 
 const LedgerData = new Schema({
@@ -34,11 +33,10 @@ app.set("view engine","ejs");
 
 app.get('/',(req,res)=>{
     let show = false;
-    var clientData = [];
     Client.find((err,clients)=>{
-        console.log(clients);
+        console.log("Client Added");
         if(clients.length>0) show=true;
-    res.render("index",{show:show,clients:clients})
+        res.render("index",{show:show,clients:clients})
     })
 })
 
@@ -95,21 +93,6 @@ app.post("/ledger/:id",(req,res)=>{
             res.redirect("/ledger/"+id);
         })
     })
-    /*
-    Client.findOne({_id:id},(err,result)=>{
-        const data = result.data;
-        if(!err) console.log(data,"found");
-        if(data.length>0){
-            details.balance = data[data.length-1].balance + (credit - debit);
-        }else{
-            details.balance = credit - debit;
-        }
-        Client.updateOne({_id:id},{$push:{data:details}},(err,rest)=>{
-            if(err) console.log(err);
-            res.redirect("/ledger/"+id);
-        })
-    })
-    */
 })
 
 app.post("/newTerm/:id",(req,res)=>{
@@ -125,8 +108,24 @@ app.post("/newTerm/:id",(req,res)=>{
             balance,
         })
         data.save((err)=>{
-            console.log(err);
+            if(err) console.log(err);
+            console.log("New Term Started");
             res.redirect("/ledger/"+id)
+        })
+    })
+})
+
+
+app.post("/rm-client/:id",(req,res)=>{
+    console.log("in post");
+    const id = req.params.id;
+    Ledger.deleteMany({userID:id},(err,result)=>{
+        if(err) console.log(err);
+        console.log(result);
+        Client.deleteOne({_id:id},(er,re)=>{
+            if(er) console.log(er);
+            console.log(re);
+            res.redirect("/");
         })
     })
 })
@@ -136,7 +135,6 @@ app.post("/add-client",(req,res)=>{
     console.log(name);
     const client = new Client({
         name:name,
-        data:[]
     })
 
     console.log(client);

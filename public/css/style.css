@@ -27,4 +27,8 @@ table tbody tr td a:hover {
 .vertical-menu table {
   margin-top: -12px;
 }
+
+#ninja {
+  display: hidden;
+}
 /*# sourceMappingURL=style.css.map */
